@@ -53,6 +53,23 @@ app.post('/additem',function(req,res){
         imageUrl : req.body.list.imageUrl
    }  )     
    items.save();
-})
+});
+
+app.get('/:id',  (req, res) => {
+      const id = req.params.id;
+      CaterData.findOne({"_id":id})
+      .then((menu)=>{
+          res.send(menu);
+      });
+});
+
+app.delete('/remove/:id',(req,res)=>{
+    id = req.params.id;
+    CaterData.findByIdAndDelete({"_id":id})
+    .then(()=>{
+        console.log('success')
+        res.send();
+    })
+});
 
 app.listen(3110);
