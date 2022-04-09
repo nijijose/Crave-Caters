@@ -3,7 +3,7 @@ mongoose.connect('mongodb+srv://userone:haihello@ictakfiles.hrt5k.mongodb.net/Cr
 const Schema = mongoose.Schema;
 
 var NewCustomSchema = new Schema({
-    foodItem : String,
+    foodMenu : String,
     rate : Number,
     imageUrl : String
 });

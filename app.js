@@ -48,7 +48,7 @@ app.post('/additem',function(req,res){
     console.log(req.body);
 
     var items = new CustomData ({       
-        foodItem : req.body.list.foodItem,
+        foodMenu : req.body.list.foodMenu,
         rate : req.body.list.rate,
         imageUrl : req.body.list.imageUrl
    }  )     
@@ -63,6 +63,14 @@ app.get('/:id',  (req, res) => {
       });
 });
 
+app.get('/:id',  (req, res) => {
+    const id = req.params.id;
+    CustomData.findOne({"_id":id})
+    .then((menu)=>{
+        res.send(menu);
+    });
+});
+
 app.delete('/remove/:id',(req,res)=>{
     id = req.params.id;
     CaterData.findByIdAndDelete({"_id":id})
@@ -71,5 +79,49 @@ app.delete('/remove/:id',(req,res)=>{
         res.send();
     })
 });
+
+app.delete('/del/:id',(req,res)=>{
+    id = req.params.id;
+    CustomData.findByIdAndDelete({"_id":id})
+    .then(()=>{
+        console.log('success')
+        res.send();
+    })
+});
+
+app.put('/update',(req,res)=>{
+    console.log(req.body)
+    id=req.body._id,
+    foodMenu= req.body.foodMenu,
+    foodItem1 = req.body.foodItem1,
+    foodItem2 = req.body.foodItem2,
+    rate = req.body.rate,
+    imageUrl = req.body.imageUrl
+    CaterData.findByIdAndUpdate({"_id":id},
+                                {$set:{"foodMenu":foodMenu,
+                                "foodItem1":foodItem1,
+                                "foodItem2":foodItem2,
+                                "rate":rate,
+                                "imageUrl":imageUrl}})
+   .then(function(){
+       res.send();
+   })
+ })
+
+
+ app.put('/increment',(req,res)=>{
+    console.log(req.body)
+    id=req.body._id,
+    foodMenu= req.body.foodMenu,
+    rate = req.body.rate,
+    imageUrl = req.body.imageUrl
+    CaterData.findByIdAndUpdate({"_id":id},
+                                {$set:{"foodMenu":foodMenu,
+                                "rate":rate,
+                                "imageUrl":imageUrl}})
+   .then(function(){
+       res.send();
+   })
+ })
 
 app.listen(3110);
